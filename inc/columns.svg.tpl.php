@@ -20,8 +20,20 @@
 	<image
 		xlink:href='copy.jpg'
 	/>
-	<line class="top" x1="0" y1="<?=$img->cut->top?>" x2="<?=$img->w?>" y2="<?=$img->cut->top?>" />
-	<?php foreach($img->cut->getEnds() as $endX) { ?>
-		<line class="column" x1="<?=$endX?>" y1="<?=$img->cut->top?>" x2="<?=$endX?>" y2="<?=$img->h?>" />
+	<line
+		class="top"
+		x1="0"
+		y1="<?=$img->cut->top?>"
+		x2="<?=$img->w?>"
+		y2="<?=$img->cut->top?>"
+		id="topCut"	/>
+	<?php foreach($img->cut->getEnds() as $key => $endX) { ?>
+		<line
+			class="column"
+			x1="<?=$endX?>"
+			y1="<?=$img->cut->top?>"
+			x2="<?=$endX?>"
+			y2="<?=$img->h?>"
+			id="columnEnd<?=$key?>"	/>
 	<?php } ?>
 </svg>
