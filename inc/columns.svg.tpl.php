@@ -14,6 +14,7 @@
 	}
 	line.top {
 		stroke: darkorange;
+		stroke-dasharray: 60 30 30 30;
 	}
 </style>
   
