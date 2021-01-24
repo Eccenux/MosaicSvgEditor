@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 3888 2547"
+   version="1.1"
+   id="svg893"
+   sodipodi:docname="test.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata899">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs897" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1858"
+     inkscape:window-height="1057"
+     id="namedview895"
+     showgrid="false"
+     inkscape:zoom="0.28215021"
+     inkscape:cx="1944"
+     inkscape:cy="1273.5"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg893" />
+  <title
+     id="title861">Cut render test</title>
+  <style
+     id="style863">
+	line {
+		fill: none;
+		stroke: red;
+		stroke-width: 4px;
+		stroke-dasharray: 40 30;
+	}
+	line.top {
+		stroke: darkorange;
+	}
+</style>
+  <image
+     sodipodi:absref="D:\_Zbiory\Gry\Ingress\APuzzle-varia\SvgEditor\img-auto-cut\copy.jpg"
+     xlink:href="img-auto-cut/copy.jpg"
+     id="image865"
+     height="2547"
+     width="3888" />
+  <line
+     class="top"
+     x1="0"
+     y1="100"
+     x2="3888"
+     y2="100"
+     id="line867" />
+  <line
+     class="column"
+     x1="299"
+     y1="100"
+     x2="299"
+     y2="2547"
+     id="line869" />
+  <line
+     class="column"
+     x1="599"
+     y1="100"
+     x2="599"
+     y2="2547"
+     id="line871" />
+  <line
+     class="column"
+     x1="899"
+     y1="100"
+     x2="899"
+     y2="2547"
+     id="line873" />
+  <line
+     class="column"
+     x1="1199"
+     y1="100"
+     x2="1199"
+     y2="2547"
+     id="line875" />
+  <line
+     class="column"
+     x1="1503"
+     y1="100"
+     x2="1503"
+     y2="2547"
+     id="line877" />
+  <line
+     class="column"
+     x1="1772"
+     y1="100"
+     x2="1772"
+     y2="2547"
+     id="line879" />
+  <line
+     class="column"
+     x1="2083"
+     y1="100"
+     x2="2083"
+     y2="2547"
+     id="line881" />
+  <line
+     class="column"
+     x1="2373"
+     y1="100"
+     x2="2373"
+     y2="2547"
+     id="line883" />
+  <line
+     class="column"
+     x1="2621"
+     y1="100"
+     x2="2621"
+     y2="2547"
+     id="line885" />
+  <line
+     class="column"
+     x1="2945"
+     y1="100"
+     x2="2945"
+     y2="2547"
+     id="line887" />
+  <line
+     class="column"
+     x1="3215"
+     y1="100"
+     x2="3215"
+     y2="2547"
+     id="line889" />
+  <line
+     class="column"
+     x1="3535"
+     y1="100"
+     x2="3535"
+     y2="2547"
+     id="line891" />
+  <line
+     class="column"
+     x1="3753"
+     y1="100"
+     x2="3753"
+     y2="2547"
+     id="line1462" />
+</svg>
