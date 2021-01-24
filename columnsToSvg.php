@@ -12,7 +12,11 @@ $fullImgPath = "{$basePath}copy.jpg";
 $outputPath = "{$basePath}columns.svg";
 $outputPathEdit = "{$basePath}columns.edit.svg";
 
-$json = file_get_contents("{$basePath}columns.json");
+$jsonPath = "{$basePath}columns.json";
+$json = '';
+if (file_exists($jsonPath)) {
+	$json = file_get_contents($jsonPath);
+}
 $columnsMeta = MetaColumns::fromJson($json);
 //echo $columnsMeta->toJson();
 
@@ -21,6 +25,16 @@ $img->load($fullImgPath);
 $img->cut = $columnsMeta;
 //var_export($img);
 
+// setup defaults
+if ($columnsMeta->top < 0) {
+	$columnsMeta->top = 100;
+}
+if ($columnsMeta->isEmpty()) {
+	$ends = $columnsMeta->generateEnds($img->w);
+	$columnsMeta->setEnds($ends);
+}
+
+// generate svg
 ob_start();
 include './inc/columns.svg.tpl.php';
 $svg = ob_get_contents();
