@@ -26,29 +26,6 @@ class MetaColumns {
 	public function isEmpty() {
 		return $this->columnCount < 1;
 	}
-	/**
-	 * Generate ends roughly.
-	 *
-	 * @param integer $imageWidth
-	 * @param integer $colWidth
-	 * @param integer $limit
-	 * @return array
-	 */
-	public function generateEnds($imageWidth, $colWidth = 300, $limit = 12) {
-		$count = floor($imageWidth / $colWidth);
-		if ($count > $limit) {
-			$count = $limit;
-		}
-		// thin image
-		if ($count <= 1) {
-			$ends = array((int)floor($imageWidth / 2));
-		} else {
-			// standard image
-			$final = $colWidth * $count;
-			$ends = range((int)$colWidth, (int)$final, (int)$colWidth);
-		}
-		return $ends;
-	}
 
 	/**
 	 * Dump to JSON.
@@ -97,4 +74,29 @@ class MetaColumns {
 			$this->setEnds($data['columnEnds']);
 		}
 	}
+
+	/**
+	 * Generate ends roughly.
+	 *
+	 * @param integer $imageWidth
+	 * @param integer $colWidth
+	 * @param integer $limit
+	 * @return array
+	 */
+	public static function generateEnds($imageWidth, $colWidth = 300, $limit = 12) {
+		$count = floor($imageWidth / $colWidth);
+		if ($count > $limit) {
+			$count = $limit;
+		}
+		// thin image
+		if ($count <= 1) {
+			$ends = array((int)floor($imageWidth / 2));
+		} else {
+			// standard image
+			$final = $colWidth * $count;
+			$ends = range((int)$colWidth, (int)$final, (int)$colWidth);
+		}
+		return $ends;
+	}
+
 }
