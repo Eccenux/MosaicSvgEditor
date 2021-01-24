@@ -5,11 +5,19 @@
  * Meta-data for columns cut.
  */
 class MetaColumns {
+	/** Top bar height (usually 100 or 15) */
 	public $top = -1;
+	/** Gap between columns (and rows) */
 	public $gap = -1;
-	/** Position of column ends (boundaries) */
+	/** Position of column ends (X boundaries) */
 	private $columnEnds = array();
 	private $columnCount = 0;
+	/**
+	 * Column bottoms (Y boundaries).
+	 * 
+	 * Note that height of a column would be $bottom - $top;
+	 */
+	public $columnBottoms = array();
 
 	/**
 	 * Set column ends/widths.
@@ -38,6 +46,7 @@ class MetaColumns {
 			'gap' => $this->gap,
 			'columnCount' => $this->columnCount,
 			'columnEnds' => $this->columnEnds,
+			'columnBottoms' => $this->columnBottoms,
 		), JSON_PRETTY_PRINT);
 		return $text;
 	}
@@ -62,7 +71,7 @@ class MetaColumns {
 	 * @param array $data Data as returned by toJson or similar.
 	 */
     public function mapProps($data) {
-		$allowed = array('top', 'gap');
+		$allowed = array('top', 'gap', 'columnBottoms');
         foreach ($data AS $key => $value) {
 			if (!in_array($key, $allowed)) {
 				continue;
@@ -99,4 +108,17 @@ class MetaColumns {
 		return $ends;
 	}
 
+	/**
+	 * Get bottom.
+	 *
+	 * @param integer $cutIndex 0-based index.
+	 * @param integer $default Default value.
+	 * @return integer
+	 */
+	public function getBottom($cutIndex, $default = 0) {
+		if (!empty($this->columnBottoms[$cutIndex])) {
+			return $this->columnBottoms[$cutIndex];
+		}
+		return $default;
+	}
 }

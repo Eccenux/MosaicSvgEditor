@@ -5,11 +5,13 @@ require_once './inc/model/MetaColumns.php';
  * Image meta and quick loader.
  */
 class MetaImage {
+	/** Image width */
 	public $w = -1;
+	/** Image height */
 	public $h = -1;
 	/** Image path */
 	public $src = '';
-	/** Basic cut data */
+	/** Basic cut data (columns) */
 	public $cut = null;
 
 	/**
