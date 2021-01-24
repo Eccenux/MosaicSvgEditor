@@ -16,6 +16,10 @@
 		stroke: darkorange;
 		stroke-dasharray: 60 30 30 30;
 	}
+	line.column-bottom {
+		stroke: yellow;
+		stroke-dasharray: 20 20;
+	}
 </style>
   
 	<image
@@ -28,6 +32,7 @@
 		x2="<?=$img->w?>"
 		y2="<?=$img->cut->top?>"
 		id="topCut"	/>
+	<!-- main column-cuts -->
 	<?php foreach($img->cut->getEnds() as $key => $endX) { ?>
 		<line
 			class="column"
@@ -36,5 +41,25 @@
 			x2="<?=$endX?>"
 			y2="<?=$img->h?>"
 			id="columnEnd<?=$key?>"	/>
+	<?php } ?>
+	<!-- bottom cuts -->
+	<?php
+		$startX = 0;
+		$minWidth = 300;
+	?>
+	<?php foreach($img->cut->columnBottoms as $key => $bottomY) { ?>
+		<?php
+			$endX = $img->cut->getColumnEnd($key, $startX + $minWidth);
+		?>
+		<line
+			class="column-bottom"
+			x1="<?=$startX?>"
+			y1="<?=$bottomY?>"
+			x2="<?=$endX?>"
+			y2="<?=$bottomY?>"
+			id="columnBottom<?=$key?>"	/>
+		<?php
+			$startX = $endX;
+		?>
 	<?php } ?>
 </svg>

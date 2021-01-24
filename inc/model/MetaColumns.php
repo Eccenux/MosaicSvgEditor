@@ -121,4 +121,17 @@ class MetaColumns {
 		}
 		return $default;
 	}
+
+	/**
+	 * Get column end.
+	 *
+	 * @param integer $cutIndex 0-based index.
+	 * @return integer
+	 */
+	public function getColumnEnd($cutIndex, $default = 0) {
+		if (!empty($this->columnEnds[$cutIndex])) {
+			return $this->columnEnds[$cutIndex];
+		}
+		return $default;
+	}
 }
