@@ -3,6 +3,14 @@ namespace classificators;
 
 require_once './inc/classificators/NodeCandidate.php';
 
+class State {
+	const OUTSIDE = 0;
+	const INSIDE = 1;
+	const INSIDISH = 0.5;
+	const MIDDLE = -1;
+	const UNKNOWN = -2;
+}
+
 /**
  * Fuzzy column.
  */
@@ -11,26 +19,20 @@ class Column {
 	public $end = 0;
 	public $num = 0;
 
-	const OUTSIDE = 0;
-	const INSIDE = 1;
-	const INSIDISH = 0.5;
-	const MIDDLE = -1;
-	const UNKNOWN = -2;
-
 	/**
 	 * Fuzzy is inside
 	 *
 	 * @param NodeCandidate $node
-	 * @return integer 0 = outside, 1 = inside, -1 = middle
+	 * @return integer See: `State`.
 	 */
 	public function isInside(NodeCandidate $node) {
 		// fully inside
 		if ($this->start <= $node->start && $this->end >= $node->end) {
-			return self::INSIDE;
+			return State::INSIDE;
 		}
 		// fully outside
 		if ($node->start >= $this->end || $node->end <= $this->start) {
-			return self::OUTSIDE;
+			return State::OUTSIDE;
 		}
 		// cuts through column start (left = outside)
 		if ($this->start > $node->start) {
@@ -44,20 +46,20 @@ class Column {
 			$right = $node->end - $this->end;
 			return $this->fuzzyCheck($left, $right);
 		}
-		return self::UNKNOWN;
+		return State::UNKNOWN;
 	}
 
 	private function fuzzyCheck($inEdge, $outEdge) {
 		$proportion = $inEdge / ($inEdge + $outEdge);
 		if ($proportion > 0.48 && $proportion < 0.52) {
-			return self::MIDDLE;
+			return State::MIDDLE;
 		}
 		if ($outEdge > $inEdge) {
-			return self::OUTSIDE;
+			return State::OUTSIDE;
 		}
 		if ($proportion >= 0.66) {
-			return self::INSIDE;
+			return State::INSIDE;
 		}
-		return self::INSIDISH;
+		return State::INSIDISH;
 	}
 }
