@@ -25,6 +25,25 @@ class ColumnClassificator {
 		foreach ($nodes as $node) {
 			$candidates[] = NodeCandidate::fromLine($node);
 		}
+		// check candidates
+		foreach ($this->columns as $column) {
+			foreach ($candidates as &$candidate) {
+				// already sure about state
+				if ($candidate->state == State::INSIDE) {
+					continue;
+				}
+				// evaluate
+				$state = $column->isInside($candidate);
+				switch ($state) {
+					case State::INSIDISH:
+					case State::INSIDE:
+					case State::MIDDLE:
+						$candidate->state = $state;
+						$candidate->column = $column->num;
+					break;
+				}
+			}
+		}
 		var_export($candidates);
 	}
 

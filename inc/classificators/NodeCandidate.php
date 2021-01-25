@@ -13,6 +13,8 @@ class NodeCandidate {
 	public $start = 0;
 	public $end = 0;
 	public $node = null;
+	public $state = State::UNKNOWN;
+	public $column = -1;
 
 	public static function fromLine($node) {
 		$self = new self();

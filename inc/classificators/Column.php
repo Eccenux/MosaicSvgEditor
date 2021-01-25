@@ -57,7 +57,7 @@ class Column {
 		if ($outEdge > $inEdge) {
 			return State::OUTSIDE;
 		}
-		if ($proportion >= 0.66) {
+		if ($proportion >= 0.67) {
 			return State::INSIDE;
 		}
 		return State::INSIDISH;
