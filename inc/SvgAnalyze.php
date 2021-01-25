@@ -39,4 +39,8 @@ class SvgAnalyze {
 		}
 		return $attr->nodeValue;
 	}
+
+	public static function getXml($node) {
+		return $node->ownerDocument->saveHTML($node);
+	}
 }

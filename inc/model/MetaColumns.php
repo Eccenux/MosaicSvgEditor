@@ -34,6 +34,9 @@ class MetaColumns {
 	public function isEmpty() {
 		return $this->columnCount < 1;
 	}
+	public function getCount() {
+		return $this->columnCount;
+	}
 
 	/**
 	 * Dump to JSON.

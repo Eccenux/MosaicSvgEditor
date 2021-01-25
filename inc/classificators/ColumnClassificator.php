@@ -19,6 +19,7 @@ class ColumnClassificator {
 
 	/**
 	 * Lines classification.
+	 * @return array of NodeCandidate.
 	 */
 	public function lines($nodes) {
 		$candidates = array();
@@ -44,7 +45,8 @@ class ColumnClassificator {
 				}
 			}
 		}
-		var_export($candidates);
+		//var_export($candidates);
+		return $candidates;
 	}
 
 	/**
