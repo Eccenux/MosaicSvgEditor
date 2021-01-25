@@ -1,5 +1,6 @@
 <?php
 require_once './inc/SvgAnalyze.php';
+require_once './inc/classificators/ColumnClassificator.php';
 require_once './inc/model/MetaColumns.php';
 
 /**
@@ -23,6 +24,8 @@ class SvgEditor {
 		$this->top($lines, $columnsMeta);
 		// read column ends
 		$this->ends($lines, $columnsMeta);
+		// read bottoms
+		$this->bottoms($lines, $columnsMeta);
 	}
 
 	/**
@@ -44,14 +47,27 @@ class SvgEditor {
 		if (empty($lines['column'])) {
 			return;
 		}
-		echo "\n[INFO] Ends found, count: ". count($lines['column']);
+		$nodes = $lines['column'];
+		echo "\n[INFO] Ends found, count: ". count($nodes);
 		$ends = array();
-		foreach ($lines['column'] as $node) {
+		foreach ($nodes as $node) {
 			$end = intval(SvgAnalyze::getAttribute($node, 'x1', 0));
 			if ($end >= $this->minColumnWidth) {
 				$ends[] = $end;
 			}
 		}
 		$columnsMeta->setEnds($ends);
+	}
+	/**
+	 * Read bottoms.
+	 */
+	private function bottoms(&$lines, MetaColumns &$columnsMeta) {
+		if (empty($lines['column-bottom'])) {
+			return;
+		}
+		$nodes = $lines['column-bottom'];
+		echo "\n[INFO] Bottoms found, count: ". count($nodes);
+		$ai = new classificators\ColumnClassificator($columnsMeta);
+		$ai->lines($nodes);
 	}
 }
