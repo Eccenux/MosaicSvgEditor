@@ -34,7 +34,7 @@ class MetaCut {
 	 * Build from JSON.
 	 *
 	 * @param string $json JSON encoded data.
-	 * @return MetaColumns the class.
+	 * @return MetaCut the class.
 	 */
 	public static function fromJson($json) {
 		$obj = new self();

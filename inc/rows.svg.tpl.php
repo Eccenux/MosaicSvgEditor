@@ -1,16 +1,16 @@
 <?='<?xml version="1.0" encoding="UTF-8" standalone="no"?>'?>
 <?php
-	$columnWidth = 300;
 	$columnGap = 30;
-	$columnFullWidth = $columnWidth+$columnGap;
+	$columnCount = $rowsMeta->getCount();
+	$viewWidth = $totalWidth + ($columnCount * $columnGap);
 ?>
 <svg
-	viewBox="0 0 <?=$rowsMeta->getCount()*$columnFullWidth?> 2800"
+	viewBox="0 0 <?=$viewWidth?> <?=$maxHeight?>"
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	style="background-color:black"
 >
-<title>Cut render test</title>
+<title>Rows cut</title>
 <style>
 	line {
 		fill: none;
@@ -25,14 +25,19 @@
 </style>
   
 	<!-- columns cut to rows -->
+	<?php
+		$startX = 0;
+	?>
 	<?php foreach($rowsMeta->getColumns() as $columnIndex => $column) { ?>
 		<?php
-			$startX = $columnIndex * $columnFullWidth;
+			$img = $imgs[$columnIndex];
+			$columnWidth = $img->w;
 			$endX = $startX + $columnWidth;
 		?>
 		<image
 			xlink:href="<?=$columnsSvgPath?><?=$column->img?>"
-			width="<?=$columnWidth?>"
+			height="<?=$img->h?>"
+			width="<?=$img->w?>"
 			y="0"
 			x="<?=$startX?>"
 		/>
@@ -45,5 +50,8 @@
 				y2="<?=$rowY?>"
 				id="row-<?=$columnIndex?>-<?=$rowIndex?>"	/>
 		<?php } ?>
+		<?php
+			$startX = $endX + $columnGap;
+		?>
 	<?php } ?>
 </svg>

@@ -3,11 +3,13 @@
 	Transform rows.json to SVG with final cut (to cells).
 */
 require_once './inc/model/MetaCut.php';
+require_once './inc/model/MetaImage.php';
 require_once './config.php';
 
 $basePath = BASE_PATH;
 $baseUrl = BASE_URL;
 $columnsSvgPath = "cols/";	// base path for SVG
+$columnsBasePath = "{$basePath}cols/";
 $outputPath = "{$basePath}rows.svg";
 $outputPathEdit = "{$basePath}rows.edit.svg";
 
@@ -17,6 +19,20 @@ if (file_exists($jsonPath)) {
 	$json = file_get_contents($jsonPath);
 }
 $rowsMeta = MetaCut::fromJson($json);
+
+// data for images width/height
+$imgs = array();
+$totalWidth = 0;
+$maxHeight = 0;
+foreach($rowsMeta->getColumns() as $column) {
+	$img = new MetaImage();
+	$img->load($columnsBasePath.$column->img);
+	$imgs[] = $img;
+	if ($maxHeight < $img->h) {
+		$maxHeight = $img->h;
+	}
+	$totalWidth += $img->w;
+}
 
 // generate svg
 ob_start();
