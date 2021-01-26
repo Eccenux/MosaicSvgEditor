@@ -13,7 +13,7 @@ $baseUrl = BASE_URL;
 $fullImgPath = "{$basePath}copy.jpg";
 
 // cut-json
-$jsonPath = "{$basePath}columns.json";
+$jsonPath = "{$basePath}columns.edit.json";
 if (!file_exists($jsonPath)) {
 	die(
 		'[ERROR] Create columns.json first!'

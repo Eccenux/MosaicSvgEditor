@@ -43,6 +43,9 @@ class Cutter {
 
 			// get height
 			$bottom = $meta->getBottom($cutNum);
+			if ($bottom < 1) {
+				$bottom = $img->getHeight();
+			}
 			$imgH = $bottom - $startY;
 
 			$output = $columnsDir . sprintf("/col_%03d.jpg", $cutNum+1);

@@ -43,6 +43,13 @@ class CutterImage {
 		return true;
 	}
 
+	public function getHeight() {
+		return $this->h;
+	}
+	public function getWidth() {
+		return $this->w;
+	}
+
 	/**
 	 * Crop and save image.
 	 *
