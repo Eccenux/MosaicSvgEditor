@@ -108,7 +108,12 @@ class SvgEditor {
 		$final = array_fill(0, $columns, 0);
 		foreach ($bottoms as $bottom) {
 			if ($bottom instanceof NodeCandidate) {
-				$final[$bottom->column-1] = (int)round(SvgAnalyze::getAttribute($bottom->node, 'y1', 0));
+				$columnIndex = $bottom->column-1;
+				if ($final[$columnIndex] > 0) {
+					echo "\n[WARNING] Duplicate bottom will override previous one (column {$bottom->column}): ";
+					echo SvgAnalyze::getXml($bottom->node);
+				}
+				$final[$columnIndex] = (int)round(SvgAnalyze::getAttribute($bottom->node, 'y1', 0));
 			}
 		}
 
