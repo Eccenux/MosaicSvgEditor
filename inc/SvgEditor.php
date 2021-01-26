@@ -63,6 +63,7 @@ class SvgEditor {
 				$ends[] = $end;
 			}
 		}
+		sort($ends, SORT_REGULAR);
 		$columnsMeta->setEnds($ends);
 	}
 	/**
