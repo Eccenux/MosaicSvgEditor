@@ -190,6 +190,7 @@ class SvgEditor {
 		$rowsMeta->clear();
 		foreach ($columns as $columnIndex=>$column) {
 			if (isset($rows[$columnIndex])) {
+				sort($rows[$columnIndex]);
 				$column->rowEnds = $rows[$columnIndex];
 			} else {
 				echo "\n[WARNING] No cuts (rows) found (column ".($columnIndex+1)."): ";
