@@ -29,7 +29,7 @@ class Cutter {
 		// prepare
 		$img = new CutterImage($file);
 		if (!$img->isOk()) {
-			$this->messages[] = "[ERROR] Unable to int cut for '$file'.";
+			$this->messages[] = "[ERROR] Unable to init cut for '$file'.";
 			return false;
 		}
 		$this->clearImageDir($columnsDir);
@@ -71,49 +71,55 @@ class Cutter {
 	}
 
 	/**
+	 * Cut columns to rows (cells).
+	 *
+	 * @param string $baseDir Base IO dir.
+	 * @param MetaColumns $meta
+	 * @return false upon error
+	 */
+	public function cutToRows($baseDir, MetaCut $meta) {
+		$columnsDir = "{$baseDir}cols/";
+		$cellsDir = "{$baseDir}cells/";
+
+		$this->clearImageDir($cellsDir);
+		$columns = $meta->getColumns();
+		foreach ($columns as $index=>$column) {
+			$this->cutColumn($column, $index+1, $columnsDir, $cellsDir);
+		}
+	}
+
+	/**
 	 * Cut column file (single column).
 	 * 
-	 * @param int $column Column number (for stats and file names).
+	 * @param MetaColumn $column Column meta.
 	 * @return false on failure.
 	 */
-	public function cutColumn($column) {
-		if (!$this->init(true)) {
+	private function cutColumn(MetaColumn $column, $columnNo, $columnsDir, $cellsDir) {
+		// prepare
+		$file = $columnsDir.$column->img;
+		$img = new CutterImage($file);
+		if (!$img->isOk()) {
+			$this->messages[] = "[ERROR] Unable to init cut for '$file'.";
 			return false;
 		}
-		$logger = new Logger($this->getLogPath(), sprintf("col_cut_%03d", $column));
 
-		// we assume column is already cut to size
-		$colh = $this->h;
-
-		// find rows
-		ob_start();
-		echo "\n[rowEnds]";
-		$rowEnds = $this->rowEnds($column, $colh);
-
-		// log cut info
-		$logger->log(ob_get_clean());
-		
-		// dump messages
-		if (!empty($this->messages)) {
-			echo "\n".implode("\n", $this->messages)."\n";
-			$this->messages = array();
-		}
+		// rows
+		$rowEnds = $column->rowEnds;
 
 		// crop images to cells
-		$rowEnds[] = $colh;
 		$startY = 0;
 		$startX = 0;
-		$imgW = $this->w;
+		$imgW = $img->getWidth();
 		for ($r=1; $r <= count($rowEnds); $r++) { 
 			$endY = $rowEnds[$r-1];
 			$imgH = $endY - $startY + 2;
-			$output = $this->out . sprintf("/col_%03d_%03d.jpg", $column, $r);
-			$this->crop($output, 100, array(
+			$output = $cellsDir . sprintf("/col_%03d_%03d.jpg", $columnNo, $r);
+			$img->crop($output, 100, array(
 				'x'=>$startX, 'y'=>$startY,
 				'width'=>$imgW, 'height'=>$imgH,
 			));
 			// next
-			$startY = $endY + $this->gap - 1;
+			$startY = $endY;
 		}
 
 		return true;
@@ -133,6 +139,15 @@ class Cutter {
 		foreach($files as $file) {
 			if(is_file($file))
 				unlink($file);
+		}
+	}
+
+	/** Dump messages. */
+	public function dumpMessages()
+	{
+		if (!empty($this->messages)) {
+			echo "\n".implode("\n", $this->messages)."\n";
+			$this->messages = array();
 		}
 	}
 }

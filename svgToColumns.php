@@ -1,6 +1,6 @@
 <?php
 /**
- * Transform columns.json to SVG with initial cut (to columns).
+ * Transform SVG to columns.edit.json with initial cut (to columns).
  */
 require_once './config.php';
 require_once './inc/model/MetaColumns.php';
