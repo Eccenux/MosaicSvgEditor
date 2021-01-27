@@ -4,7 +4,7 @@
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 >
-<title>Cut render test</title>
+<title>Columns cut</title>
 <style>
 	line {
 		fill: none;

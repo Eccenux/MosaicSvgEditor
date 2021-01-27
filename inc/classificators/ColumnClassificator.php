@@ -12,9 +12,21 @@ require_once './inc/classificators/Column.php';
 class ColumnClassificator {
 	private $columns = array();
 
-	public function __construct(\MetaColumns $columnsMeta) {
-		// init columns
-		$this->init($columnsMeta);
+	private function __construct() {
+	}
+
+	/** From full metadata. */
+	public static function fromColumns(\MetaColumns $columnsMeta) {
+		$obj = new self();
+		$ends = $columnsMeta->getEnds();
+		$obj->init($ends);
+		return $obj;
+	}
+	/** From column ends directly. */
+	public static function fromEnds($ends) {
+		$obj = new self();
+		$obj->init($ends);
+		return $obj;
 	}
 
 	/**
@@ -52,10 +64,9 @@ class ColumnClassificator {
 	/**
 	 * Init internals.
 	 */
-	private function init(\MetaColumns &$columnsMeta) {
+	private function init($ends) {
 		// column boundaries
 		$this->columns = array();
-		$ends = $columnsMeta->getEnds();
 		$start = 0;
 		foreach ($ends as $index => $end) {
 			$column = new Column();

@@ -8,8 +8,12 @@
 	viewBox="0 0 <?=$viewWidth?> <?=$maxHeight?>"
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
 	style="background-color:black"
 >
+<sodipodi:namedview
+	pagecolor="#000000"
+/>
 <title>Rows cut</title>
 <style>
 	line {

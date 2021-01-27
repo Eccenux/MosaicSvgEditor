@@ -20,7 +20,7 @@ class SvgEditor {
 	}
 
 	/**
-	 * Process Columns SVG editor.
+	 * Process Columns of a SVG editor.
 	 *
 	 * @param SvgAnalyze $svg SVG after edit.
 	 * @param MetaColumns $columnsMeta Previous meta to modify.
@@ -75,7 +75,7 @@ class SvgEditor {
 		}
 		$nodes = $lines['column-bottom'];
 		echo "\n[INFO] Bottoms found, count: ". count($nodes);
-		$ai = new ColumnClassificator($columnsMeta);
+		$ai = ColumnClassificator::fromColumns($columnsMeta);
 		$candidates = $ai->lines($nodes);
 		$bottoms = array();
 		foreach ($candidates as $candidate) {
@@ -119,4 +119,24 @@ class SvgEditor {
 
 		$columnsMeta->columnBottoms = $final;
 	}
+
+	/**
+	 * Process Rows of a SVG editor.
+	 *
+	 * @param SvgAnalyze $svg SVG after edit.
+	 * @param MetaCut $columnsMeta Previous meta to modify.
+	 */
+	public function processRows(SvgAnalyze $svg, MetaCut &$rowsMeta) {
+		$lines = $svg->getNodesByClass('line');
+		$images = $svg->svg->getElementsByTagName('image');
+		foreach ($images as $image) {
+			SvgAnalyze::getXml($image);
+		}
+		echo "done";
+		// // read columns
+		// $this->ends($lines, $columnsMeta);
+		// // read rows
+		// $this->rows($lines, $columnsMeta);
+	}
+
 }
