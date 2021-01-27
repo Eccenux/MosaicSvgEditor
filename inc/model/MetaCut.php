@@ -55,4 +55,8 @@ class MetaCut {
 	{
 		return count($this->columns);
 	}
+	public function clear()
+	{
+		$this->columns = array();
+	}
 }

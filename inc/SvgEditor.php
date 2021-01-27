@@ -127,16 +127,74 @@ class SvgEditor {
 	 * @param MetaCut $columnsMeta Previous meta to modify.
 	 */
 	public function processRows(SvgAnalyze $svg, MetaCut &$rowsMeta) {
-		$lines = $svg->getNodesByClass('line');
+		// get ends (right bound of columns)
 		$images = $svg->svg->getElementsByTagName('image');
+		$ends = array();
 		foreach ($images as $image) {
-			SvgAnalyze::getXml($image);
+			//echo "\n".SvgAnalyze::getXml($image);
+			$end = intval(SvgAnalyze::getAttribute($image, 'x'));
+			$end += intval(SvgAnalyze::getAttribute($image, 'width'));
+			$ends[] = $end;
 		}
-		echo "done";
-		// // read columns
-		// $this->ends($lines, $columnsMeta);
-		// // read rows
-		// $this->rows($lines, $columnsMeta);
+		// read rows
+		$lines = $svg->getNodesByClass('line');
+		$this->rows($lines, $rowsMeta, $ends);
 	}
 
+	/**
+	 * Read rows.
+	 */
+	private function rows(&$lines, MetaCut &$rowsMeta, $ends) {
+		if (empty($lines['row'])) {
+			return;
+		}
+		$nodes = $lines['row'];
+		echo "\n[INFO] Rows found, count: ". count($nodes);
+		$ai = ColumnClassificator::fromEnds($ends);
+		$candidates = $ai->lines($nodes);
+		$filtered = array();
+		foreach ($candidates as $candidate) {
+			switch ($candidate->state) {
+				case State::INSIDE:
+					$filtered[] = $candidate;
+				break;
+				case State::INSIDISH:
+					echo "\n[WARNING] Suspicious row end (close to a middle of a column {$candidate->column}): ";
+					echo SvgAnalyze::getXml($candidate->node);
+					$filtered[] = $candidate;
+				break;
+				case State::MIDDLE:
+					echo "\n[ERROR] Invalid row end (between columns {$candidate->column}): ";
+					echo SvgAnalyze::getXml($candidate->node);
+				break;
+				default:
+					echo "\n[WARNING] Unrecognized (skipped) row end: ";
+					echo SvgAnalyze::getXml($candidate->node);
+				break;
+			}
+		}
+
+		// map to column=>ends
+		$rows = array();
+		foreach ($filtered as $rowNode) {
+			$columnIndex = $rowNode->column - 1;
+			if (!isset($rows[$columnIndex])) {
+				$rows[$columnIndex] = array();
+			}
+			$end = (int)round(SvgAnalyze::getAttribute($rowNode->node, 'y1', 0));
+			$rows[$columnIndex][] = $end;
+		}
+
+		// re-append columns
+		$columns = $rowsMeta->getColumns();
+		$rowsMeta->clear();
+		foreach ($columns as $columnIndex=>$column) {
+			if (isset($rows[$columnIndex])) {
+				$column->rowEnds = $rows[$columnIndex];
+			} else {
+				echo "\n[WARNING] No cuts (rows) found (column ".($columnIndex+1)."): ";
+			}
+			$rowsMeta->append($column->img, $column->rowEnds);
+		}
+	}
 }
