@@ -185,17 +185,56 @@ class SvgEditor {
 			$rows[$columnIndex][] = $end;
 		}
 
+		// sort & filter
+		for ($columnIndex=0; $columnIndex < count($rows); $columnIndex++) { 
+			sort($rows[$columnIndex]);
+			$before = count($rows[$columnIndex]);
+			$rows[$columnIndex] = $this->removeClose($rows[$columnIndex]);
+			$after = count($rows[$columnIndex]);
+			if ($after != $before) {
+				echo "\n[WARNING] Duplicate row-cuts were skipped $after != $before (column ".($columnIndex+1)."): ";
+			}
+		}
+
 		// re-append columns
 		$columns = $rowsMeta->getColumns();
 		$rowsMeta->clear();
 		foreach ($columns as $columnIndex=>$column) {
 			if (isset($rows[$columnIndex])) {
-				sort($rows[$columnIndex]);
 				$column->rowEnds = $rows[$columnIndex];
 			} else {
 				echo "\n[WARNING] No cuts (rows) found (column ".($columnIndex+1)."): ";
 			}
 			$rowsMeta->append($column->img, $column->rowEnds);
 		}
+	}
+
+	/**
+	 * Remove too close numbers.
+	 *
+	 * @param array $array Array of numbers. MUST be sorted.
+	 * @param integer $minDistance
+	 * @return array filtered array.
+	 */
+	private static function removeClose($array, $minDistance = 50) {
+		$ret = array();
+		$previous = 0;
+		foreach ($array as $value) {
+			$skip = false;
+			$diff = abs($value - $previous);
+			if ($diff < $minDistance) {
+				$skip = true;
+			}
+			if (!$skip) {
+				$ret[] = $value;
+				$previous = $value;
+			}
+		}
+		return $ret;
+	}
+
+	/** For testing, don't use. */
+	public static function removeCloseTest($array, $minDistance = 50) {
+		return self::removeClose($array, $minDistance);
 	}
 }
