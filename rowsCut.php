@@ -31,5 +31,3 @@ $cutter = new Cutter();
 
 $cutter->cutToRows($basePath, $rowsMeta);
 $cutter->dumpMessages();
-
-echo "\nDone";

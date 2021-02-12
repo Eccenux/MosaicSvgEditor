@@ -32,4 +32,3 @@ $cutter = new Cutter();
 $cutter->cutToColumns($fullImgPath, $basePath, $columnsMeta);
 $cutter->dumpMessages();
 
-echo "\nDone";
