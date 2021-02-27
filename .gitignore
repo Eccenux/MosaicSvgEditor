@@ -1,2 +1,4 @@
 /img-auto-cut
 *.lnk
+/ext-*
+/.ext-*
