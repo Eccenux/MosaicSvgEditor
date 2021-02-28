@@ -13,13 +13,13 @@ To edit SVG you need [Inkscape](https://inkscape.org/) or a similar editor(*). I
 
 * `config.php` -- adjust to your needs. Especially URL, but only if you want to preview results in a browser.
 
-###Editing columns
+### Editing columns
 
 * `columnsToSvg.php` -- 1st stage (json->svg): generates columns-cut preview/editor. It assumes "copy.jpg" contains an un-cut image (used as a background for).
 * `svgToColumns.php` -- 2nd stage (svg->json): after editing SVG this generates a cut JSON.
 * `columnsCut.php` -- 3rd stage (json->col*.jpg). Uses generated JSON to cut columns. 
 
-###Editing rows (cells)
+### Editing rows (cells)
 
 * `rowsToSvg.php` -- 1st stage (json->svg): generates rows-cut preview/editor.
 * `svgToRows.php` -- 2nd stage (svg->json): after editing SVG this generates a cut JSON.
